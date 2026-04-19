@@ -1,7 +1,10 @@
 package edu.moravian;
 
-import io.github.cdimascio.dotenv.Dotenv;
-import io.github.cdimascio.dotenv.DotenvException;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
+
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -44,18 +47,28 @@ public class StockMarketBot
         });
     }
 
-    private static String loadToken()
-    {
-        try
-        {
-            Dotenv dotenv = Dotenv.load();
-            return dotenv.get("DISCORD_TOKEN");
+    public static void loadToken() {
+
+        String secretName = "220_Discord_Token";
+        Region region = Region.of("us-east-1");
+
+        // Create a Secrets Manager client
+        SecretsManagerClient client = SecretsManagerClient.builder()
+                .region(region)
+                .build();
+
+        GetSecretValueRequest getSecretValueRequest = GetSecretValueRequest.builder()
+                .secretId(secretName)
+                .build();
+
+        GetSecretValueResponse getSecretValueResponse;
+
+        try {
+            getSecretValueResponse = client.getSecretValue(getSecretValueRequest);
+        } catch (Exception e) {
+            throw new InternalSystemException("Failed to load discord token");
         }
-        catch(DotenvException e)
-        {
-            System.err.println("Failed to load .env file\n\nIs it present?");
-            System.exit(1);
-            return null;  // needed for the compiler
-        }
+
+        return secret = getSecretValueResponse.secretString();
     }
 }
