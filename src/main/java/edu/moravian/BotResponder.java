@@ -64,8 +64,8 @@ public class BotResponder {
         if (gameState.equals(GameState.IN_PROGRESS)) {
             return BotResponses.gameAlreadyInProgress();
         }
-        game.reset();
-        game.createInitialMarketValues();
+        //game.reset();
+        //game.createInitialMarketValues();
         gameState = GameState.IN_PROGRESS;
         return BotResponses.gameSuccessfullyStarted();
     }
@@ -80,6 +80,7 @@ public class BotResponder {
             double totalValue = game.getPortfolioValue(player);
             finalValues.put(player, totalValue);
         }
+        game.reset();
         gameState = GameState.NO_GAME;
         return BotResponses.gameSuccessfullyEnded(finalValues);
     }

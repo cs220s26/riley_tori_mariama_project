@@ -17,6 +17,7 @@ class BotResponderTest {
         MemoryStorage storage = new MemoryStorage();
         game = new StockMarketGame(storage);
         responder = new BotResponder(game);
+        storage.setStockValue("AAPL", 150.0);
     }
 
     @Test

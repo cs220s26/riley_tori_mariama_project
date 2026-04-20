@@ -44,7 +44,7 @@ public class BotResponses {
     public static String availableCommands() {
         return  "`!help` - Show this help message" +
                 "\n**Game Controls**" +
-                "\n- `!startSim` - Start a new game" +
+                "\n- `!startSim` - Starts the game" +
                 "\n- `!endSim` - End the current game" +
                 "\n- `!status` - Get the status of the game" +
                 "\n- `!players` - List players in the current game" +

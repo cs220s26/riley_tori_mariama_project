@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import redis.clients.jedis.exceptions.JedisConnectionException;
+import edu.moravian.Exceptions.StorageException;
 
 public class StockMarketBot
 {
@@ -23,6 +24,10 @@ public class StockMarketBot
         }
         catch (JedisConnectionException e) {
             System.out.println("Could not connect to Redis");
+            return;
+        }
+        catch (StorageException e) {
+            System.out.println("Could not connect to Redis... is it running?");
             return;
         }
         StockMarketGame game = new StockMarketGame(storage);
