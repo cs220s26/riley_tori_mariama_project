@@ -47,12 +47,11 @@ public class StockMarketBot
         });
     }
 
-    public static void loadToken() {
+    public static String loadToken() {
 
         String secretName = "220_Discord_Token";
         Region region = Region.of("us-east-1");
 
-        // Create a Secrets Manager client
         SecretsManagerClient client = SecretsManagerClient.builder()
                 .region(region)
                 .build();
@@ -66,9 +65,15 @@ public class StockMarketBot
         try {
             getSecretValueResponse = client.getSecretValue(getSecretValueRequest);
         } catch (Exception e) {
-            throw new InternalSystemException("Failed to load discord token");
+            System.err.println("Could not retrieve secret from AWS Secrets Manager");
+            System.exit(1);
+            return null;
         }
+        String secret = getSecretValueResponse.secretString().trim();
 
-        return secret = getSecretValueResponse.secretString();
+        int start = secret.indexOf(":\"") + 2;
+        int end = secret.lastIndexOf("\"");
+
+        return secret.substring(start, end);
     }
 }
