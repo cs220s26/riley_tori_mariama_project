@@ -5,18 +5,23 @@ Project designed for CSCI220 DevOps.
 
 # Contributers
 
-* Riley Trigo 
-* Mariama Diallo
-* Ahmed Saeed
-* Tori Champagne
+- [Riley Trigo](https://github.com/RileyJTrigo) 
+- [Mariama Diallo](https://github.com/diallom-max)
+- [Ahmed Saeed](https://github.com/AhmedSaeed-CS)
+- [Tori Champagne](https://github.com/champagnet04)
 
 # Set Up
 To set up this this project:
 
-* First we need to install homebrew: 
+* First we need to install homebrew:
+
+``` 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 * to verify installation of homebrew type brew -h. Output should be:
+
+```
 Example usage:
   brew search TEXT|/REGEX/
   brew info [FORMULA|CASK...]
@@ -40,33 +45,57 @@ Further help:
   brew help [COMMAND]
   man brew
   https://docs.brew.sh
+```
 
 * then install git:
-brew install git
 
-* then install java: 
+```
+brew install git
+```
+
+* then install java:
+
+``` 
 brew install openjdk
+```
 
 * then install maven:
+
+```
 brew install maven
+```
 
 * then install redis:
+
+```
 brew install redis
+```
 
 * Next, clone the repo and open the folder: 
+
+```
 git clone https://github.com/cs220s26/riley_tori_mariama_ahmed.git
 cd riley_tori_mariama_ahmed
+```
 
 # Local Deploy
 After cloning the repo, complete the following steps:
+
 * Compile, Test, Package:
+
+```
 mvn package
+```
 
 * Bot token 
 (we need to do that)
 
+
 * in one terminal window run redis:
+
+```
 redis-server
+```
 
 * in a second terminal window run the bot
 java -jar target/....
