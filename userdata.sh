@@ -7,3 +7,4 @@ sudo cp discord_bot.service /etc/systemd/system
 sudo systemctl start redis6
 sudo systemctl enable discord_bot.service 
 sudo systemctl start discord_bot.service
+./scripts/seed_active_game.sh
