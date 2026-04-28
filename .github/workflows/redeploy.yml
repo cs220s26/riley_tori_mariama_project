@@ -15,4 +15,4 @@ jobs:
           key: ${{ secrets.LABSUSERPEM }}
           script: |
             cd /riley_tori_mariama_ahmed
-            ./redeploy.sh
+            sudo ./redeploy.sh
