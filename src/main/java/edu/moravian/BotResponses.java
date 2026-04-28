@@ -42,7 +42,8 @@ public class BotResponses {
     }
 
     public static String availableCommands() {
-        return  "`!help` - Show this help message" +
+        return  "Test was successful :)" +
+		"`!help` - Show this help message" +
                 "\n**Game Controls**" +
                 "\n- `!startSim` - Starts the game" +
                 "\n- `!endSim` - End the current game" +
