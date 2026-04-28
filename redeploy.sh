@@ -1,4 +1,4 @@
-git pull origin main
+sudo git pull origin main
 sudo mvn clean
 sudo mvn package
 sudo systemctl daemon-reload
