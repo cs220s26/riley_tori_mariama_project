@@ -4,7 +4,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=java -jar home/ec2-user/riley_tori_mariama_ahmed/target/dbot-1.0.0-jar-with-dependencies.jar 
+ExecStart=java -jar /riley_tori_mariama_ahmed/target/dbot-1.0.0-jar-with-dependencies.jar 
 
 
 [Install]
