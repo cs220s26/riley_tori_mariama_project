@@ -4,7 +4,7 @@ set -e
 API_URL="https://webapps.cs.moravian.edu/awsdns/setip"
 
 # -----------------------------
-# Fetch secrets from AWS
+# Fetch secrets from AWS Secrets Manager
 # -----------------------------
 SECRET_JSON=$(aws secretsmanager get-secret-value \
   --secret-id 220_DNS_Token \
@@ -26,9 +26,14 @@ if [ -z "$USERNAME" ] || [ -z "$LABEL" ] || [ -z "$TOKEN" ]; then
 fi
 
 # -----------------------------
-# Get EC2 public IP
+# Get EC2 public IP (IMDSv2 safe)
 # -----------------------------
-PUBLIC_IP=$(curl -s --max-time 5 http://169.254.169.254/latest/meta-data/public-ipv4)
+TOKEN_IMDS=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" \
+  -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+PUBLIC_IP=$(curl -s \
+  -H "X-aws-ec2-metadata-token: $TOKEN_IMDS" \
+  http://169.254.169.254/latest/meta-data/public-ipv4)
 
 if [ -z "$PUBLIC_IP" ]; then
   echo "ERROR: Could not retrieve public IP"
@@ -51,9 +56,9 @@ HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
 BODY=$(echo "$RESPONSE" | sed '$d')
 
 if [ "$HTTP_CODE" -eq 200 ]; then
-    exit 0
+  exit 0
 else
-    echo "ERROR: DNS registration failed ($HTTP_CODE)"
-    echo "$BODY"
-    exit 1
+  echo "ERROR: DNS registration failed ($HTTP_CODE)"
+  echo "$BODY"
+  exit 1
 fi
