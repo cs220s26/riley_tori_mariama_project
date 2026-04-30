@@ -10,7 +10,7 @@ jobs:
       - name: ssh-pipeline
         uses: appleboy/ssh-action@v1
         with:
-          host: 98.93.0.75
+          host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.LABSUSERPEM }}
           script: |
