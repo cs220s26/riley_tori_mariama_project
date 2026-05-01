@@ -4,14 +4,12 @@ git clone https://github.com/cs220s26/riley_tori_mariama_ahmed.git
 cd /riley_tori_mariama_ahmed
 sudo mvn package
 
-sudo systemctl enable redis6
-sudo systemctl start redis6
-
 ./register_dns.sh
+
+sudo systemctl enable redis6
+./scripts/seed_active_game.sh
 
 sudo cp discord_bot.service /etc/systemd/system
 sudo systemctl daemon-reload
 sudo systemctl enable discord_bot.service 
 sudo systemctl start discord_bot.service
-
-./scripts/seed-active-game.sh
