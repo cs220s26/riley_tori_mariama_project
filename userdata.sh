@@ -14,4 +14,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable discord_bot.service 
 sudo systemctl start discord_bot.service
 
-./scripts/seed_active_game.sh
+./scripts/seed-active-game.sh
