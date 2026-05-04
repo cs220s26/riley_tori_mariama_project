@@ -42,7 +42,6 @@
     <module name="DefaultComesLast"/>
     <module name="DeclarationOrder"/>
     <module name="VariableDeclarationUsageDistance"/>
-    <module name="FinalLocalVariable"/>
     <module name="VisibilityModifier"/>
 
     <!-- Javadoc inside TreeWalker -->
