@@ -71,6 +71,29 @@ brew install maven
 brew install redis
 ```
 
+* Next, Create your Discord app:
+
+1. Go to the [Discord Developers](https://discord.com/developers/applications)page.
+2. Click "New Application"
+3. Name your bot and create the bot.
+
+* After the app is created, set up the bot token:
+1. On the left bar menu click on "Bot"
+2. Under "Token" section click on reset token, copy the token and save it for later.
+
+* Message intent
+1. On the left bar menu click on "Bot"
+2. Go to section named "Privileged Gateway Intents"
+3. Click on Message Content Intent toggle bar to turn it on and Save Changes.
+
+* Bot Authorization
+1. On the left bar menu click on "OAuth2"
+2. In the "Scopes" section, Select the box for "bot".
+3. In “Bot Permissions” under “Text Permissions,” click the checkbox for “Send Messages”
+4. In the bottom, under "Generated URL" copy it and paste it into a new browser tab.
+5. When the page loads, add and authorize the bot to a server.
+6. In the server, create a channel named "trigo-bot".
+
 * Next, clone the repo and open the folder: 
 
 ```
@@ -270,7 +293,70 @@ sudo bash ./redeploy.sh
 * If the workflow runs successfully, the bot is redeployed on AWS EC2.
 * If the SSH connection fails, the script fails, or the EC2 instance is not set up correctly, the CD workflow fails. The error can be viewed in the GitHub repository under the Actions tab.
 
+# Technologies Used
 
+* Java - Used as the main programming language for the Discord bot.
+  * https://www.oracle.com/java/
+
+* Maven - Used to build, test, and package the Java project.
+  * https://maven.apache.org/
+
+* Git - Used for version control.
+  * https://git-scm.com/
+
+* GitHub - Used to store the project repository.
+  * https://github.com/
+
+* GitHub Actions - Used for CI/CD workflows.
+  * https://github.com/features/actions
+
+* Discord Developer Platform - Used to create and configure the Discord bot.
+  * https://docs.discord.com/developers/intro
+
+* JDA Java Discord API - Used to connect the Java program to Discord.
+  * https://jda.wiki/
+
+* Redis - Used as a data storage mechanism for the bot.
+  * https://redis.io/
+
+* AWS EC2 - Used to deploy and run the bot on a cloud server.
+  * https://aws.amazon.com/ec2/
+
+* AWS Secrets Manager - Used to store the Discord bot token securely.
+  * https://aws.amazon.com/secrets-manager/
+
+* Homebrew - Used to install tools such as Git, Java, Maven, and Redis locally.
+  * https://brew.sh/
+
+
+# Background
+
+* We used the Homebrew documentation to install the tools needed for local setup, including Git, Java, Maven, and Redis.
+  * https://brew.sh/
+
+* We used the Git documentation to clone the repository and work with version control.
+  * https://git-scm.com/docs
+
+* We used the Maven documentation to build, test, and package the Java project.
+  * https://maven.apache.org/guides/
+
+* We used the Redis documentation to install Redis and verify that the Redis server was running.
+  * https://redis.io/docs/latest/
+
+* We used the Discord Developer documentation to create the Discord application, create the bot, and get the bot token.
+  * https://docs.discord.com/developers/bots/overview
+
+* We used the JDA documentation to connect the Java project to Discord.
+  * https://jda.wiki/
+
+* We used the AWS Secrets Manager documentation to store the Discord bot token securely.
+  * https://docs.aws.amazon.com/secretsmanager/
+
+* We used the AWS EC2 documentation to set up an EC2 instance for deployment.
+  * https://docs.aws.amazon.com/ec2/
+
+* We used the GitHub Actions documentation to create the CI and CD workflow files.
+  * https://docs.github.com/actions
 
 
 
