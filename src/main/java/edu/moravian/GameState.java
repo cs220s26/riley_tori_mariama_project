@@ -1,6 +1,15 @@
 package edu.moravian;
 
+/**
+ * Represents the current state of the stock market simulation.
+ */
+
 public enum GameState {
-    IN_PROGRESS, NO_GAME
+
+    /** A game is currently running. */
+    IN_PROGRESS,
+
+    /** No game is currently active. */
+    NO_GAME
 
 }

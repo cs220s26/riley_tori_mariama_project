@@ -1,11 +1,22 @@
 package edu.moravian;
 
-import edu.moravian.Exceptions.*;
+import edu.moravian.Exceptions.InvalidStockException;
+import edu.moravian.Exceptions.PlayerNotInGameException;
+import edu.moravian.Exceptions.StorageException;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
-import java.util.*;
+
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.TreeSet;
+
 
 public class RedisStorage implements StockMarketStorage {
+    /**
+     * Redis connection used for storing and retrieving game data.
+     */
     private final Jedis jedis;
 
     public RedisStorage(String hostname, int port) throws StorageException {
@@ -39,7 +50,7 @@ public class RedisStorage implements StockMarketStorage {
     @Override
     public List<String> getPlayers() throws StorageException {
         try {
-            Set<String> players = jedis.smembers("players");
+            final Set<String> players = jedis.smembers("players");
             return new ArrayList<>(players);
         } catch (JedisConnectionException e) {
             throw new StorageException();
@@ -49,8 +60,10 @@ public class RedisStorage implements StockMarketStorage {
     @Override
     public double getPlayerCash(String playerName) throws StorageException {
         try {
-            String cash = jedis.hget("portfolio:" + playerName, "cash");
-            if (cash == null) return 0.0;
+            final String cash = jedis.hget("portfolio:" + playerName, "cash");
+            if (cash == null) {
+                return 0.0;
+            }
             return Double.parseDouble(cash);
         } catch (JedisConnectionException | NumberFormatException e) {
             throw new StorageException();
@@ -69,11 +82,11 @@ public class RedisStorage implements StockMarketStorage {
     @Override
     public Set<String> getPlayerStocks(String playerName) throws StorageException {
         try {
-            Map<String, String> entirePortfolio = jedis.hgetAll("portfolio:" + playerName);
+            final Map<String, String> entirePortfolio = jedis.hgetAll("portfolio:" + playerName);
 
-            Set<String> stocks = new TreeSet<>();
+            final Set<String> stocks = new TreeSet<>();
             for (String field : entirePortfolio.keySet()) {
-                if (!field.equals("cash")) {
+                if (!"cash".equals(field)) {
                     stocks.add(field);
                 }
             }
@@ -88,8 +101,10 @@ public class RedisStorage implements StockMarketStorage {
     public double getPlayerStockQuantity(String playerName, String stockSymbol)
             throws StorageException {
         try {
-            String qty = jedis.hget("portfolio:" + playerName, stockSymbol);
-            if (qty == null) return 0.0;
+            final String qty = jedis.hget("portfolio:" + playerName, stockSymbol);
+            if (qty == null) {
+                return 0.0;
+            }
             return Double.parseDouble(qty);
         } catch (JedisConnectionException | NumberFormatException e) {
             throw new StorageException();
@@ -134,7 +149,7 @@ public class RedisStorage implements StockMarketStorage {
     @Override
     public double getStockValue(String stockSymbol) throws StorageException {
         try {
-            String val = jedis.hget("market:prices", stockSymbol);
+            final String val = jedis.hget("market:prices", stockSymbol);
             if (val == null) {
                 throw new InvalidStockException();
             }

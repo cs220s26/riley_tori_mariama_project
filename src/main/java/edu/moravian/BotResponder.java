@@ -1,10 +1,28 @@
 package edu.moravian;
 
-import edu.moravian.Exceptions.*;
+import edu.moravian.Exceptions.InsufficientFundException;
+import edu.moravian.Exceptions.InvalidStockException;
+import edu.moravian.Exceptions.InvalidQuantityException;
+import edu.moravian.Exceptions.InternalSystemException;
+import edu.moravian.Exceptions.PlayerNotInGameException;
+import edu.moravian.Exceptions.PlayerAlreadyExistsException;
+import edu.moravian.Exceptions.StorageException;
+import edu.moravian.Exceptions.InsufficientStockException;
+
 import java.util.HashMap;
 
+
+
 public class BotResponder {
-    StockMarketGame game;
+    /**
+     * Reference to the stock market game logic used to execute commands.
+     */
+    private StockMarketGame game;
+
+    /**
+     * Tracks whether a simulation is currently running or not.
+     */
+
     private GameState gameState;
 
     public BotResponder(StockMarketGame game) {
@@ -14,34 +32,33 @@ public class BotResponder {
 
     public String respond(String message, String playerName) {
         try {
-            if (message.equals("!help"))
+            if ("!help".equals(message)) {
                 return handleHelp();
-            else if (message.equals("!status"))
+            } else if ("!status".equals(message)) {
                 return handleStatus();
-            else if (message.equals("!startSim"))
+            } else if ("!startSim".equals(message)) {
                 return handleStart();
-            else if (message.equals("!endSim"))
+            } else if ("!endSim".equals(message)) {
                 return handleEnd();
-            else if (message.equals("!players"))
+            } else if ("!players".equals(message)) {
                 return handlePlayers();
-            else if (message.equals("!join"))
+            } else if ("!join".equals(message)) {
                 return handleJoin(playerName);
-            else if (message.startsWith("!buy"))
+            } else if (message.startsWith("!buy")) {
                 return handleBuy(message, playerName);
-            else if (message.startsWith("!sell"))
+            } else if (message.startsWith("!sell")) {
                 return handleSell(message, playerName);
-            else if (message.equals("!portfolio"))
+            } else if ("!portfolio".equals(message)) {
                 return handlePortfolio(playerName);
-            else if (message.equals("!market"))
+            } else if ("!market".equals(message)) {
                 return handleMarketOverview();
-            else if (message.equals("!next"))
+            } else if ("!next".equals(message)) {
                 return handleNextRound();
+            }
             return BotResponses.unknownCommand(message);
-        }
-        catch (PlayerNotInGameException e) {
+        } catch (PlayerNotInGameException e) {
             return BotResponses.playerNotInGame(playerName);
-        }
-        catch (InternalSystemException | StorageException e) {
+        } catch (InternalSystemException | StorageException e) {
             return BotResponses.internalSystemError();
         }
     }
@@ -75,9 +92,9 @@ public class BotResponder {
             return BotResponses.noGameInProgress();
         }
         // Ends game and reports players and their portfolio values
-        HashMap<String, Double> finalValues = new HashMap<>();
+        final HashMap<String, Double> finalValues = new HashMap<>();
         for (String player : game.getPlayers()) {
-            double totalValue = game.getPortfolioValue(player);
+            final double totalValue = game.getPortfolioValue(player);
             finalValues.put(player, totalValue);
         }
         game.reset();
@@ -112,11 +129,11 @@ public class BotResponder {
             return BotResponses.noGameInProgress();
         }
         // Extract message
-        String[] parts = message.split(" ");
+        final String[] parts = message.split(" ");
         if (parts.length != 3) {
             return BotResponses.wrongUseOfBuyCommand();
         }
-        double quantity;
+        final double quantity;
         try {
             quantity = Double.parseDouble(parts[2]);
         } catch (NumberFormatException e) {
@@ -126,14 +143,11 @@ public class BotResponder {
         // Attempt to buy stock
         try {
             game.buyStock(playerName, parts[1], quantity);
-        }
-        catch (InsufficientFundException e) {
+        } catch (InsufficientFundException e) {
             return BotResponses.insufficientFunds();
-        }
-        catch (InvalidStockException e) {
+        } catch (InvalidStockException e) {
             return BotResponses.invalidStock(parts[1]);
-        }
-        catch (InvalidQuantityException e) {
+        } catch (InvalidQuantityException e) {
             return BotResponses.invalidQuantity();
         }
         return BotResponses.stockSuccessfullyBought(playerName, parts[1], quantity);
@@ -144,11 +158,11 @@ public class BotResponder {
             return BotResponses.noGameInProgress();
         }
         // Extract message
-        String[] parts = message.split(" ");
+        final String[] parts = message.split(" ");
         if (parts.length != 3) {
             return BotResponses.wrongUseOfSellCommand();
         }
-        double quantity;
+        final double quantity;
 
         try {
             quantity = Double.parseDouble(parts[2]);
@@ -159,14 +173,11 @@ public class BotResponder {
         // Attempt to sell stock
         try {
             game.sellStock(playerName, parts[1], quantity);
-        }
-        catch (InsufficientStockException e) {
+        } catch (InsufficientStockException e) {
             return BotResponses.insufficientStocks();
-        }
-        catch (InvalidStockException e) {
+        } catch (InvalidStockException e) {
             return BotResponses.invalidStock(parts[1]);
-        }
-        catch (InvalidQuantityException e) {
+        } catch (InvalidQuantityException e) {
             return BotResponses.invalidQuantity();
         }
         return BotResponses.stockSuccessfullySold(playerName, parts[1], quantity);
@@ -176,9 +187,9 @@ public class BotResponder {
         if (gameState.equals(GameState.NO_GAME)) {
             return BotResponses.noGameInProgress();
         }
-        double cash = game.getCash(playerName);
-        double totalValue = game.getPortfolioValue(playerName);
-        String portfolioOverview = game.getPortfolioOverview(playerName);
+        final double cash = game.getCash(playerName);
+        final double totalValue = game.getPortfolioValue(playerName);
+        final String portfolioOverview = game.getPortfolioOverview(playerName);
         return BotResponses.portfolioOverview(playerName, portfolioOverview, cash, totalValue);
     }
 

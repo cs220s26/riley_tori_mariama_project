@@ -1,12 +1,26 @@
 package edu.moravian;
 
-import edu.moravian.Exceptions.*;
-import java.util.*;
+import edu.moravian.Exceptions.InvalidStockException;
+import edu.moravian.Exceptions.PlayerAlreadyExistsException;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 
 public class MemoryStorage implements StockMarketStorage {
+
+    /** List of players in the game. */
     private List<String> players;
+
+    /** Cash balance for each player. */
     private HashMap<String, Double> playerCash;
+
+    /** Stock holdings for each player. */
     private HashMap<String, HashMap<String, Double>> playerStocks;
+
+    /** Market stock values. */
     private HashMap<String, Double> marketValues;
 
     public MemoryStorage() {

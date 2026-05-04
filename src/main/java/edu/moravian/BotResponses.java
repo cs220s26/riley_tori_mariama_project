@@ -42,7 +42,7 @@ public class BotResponses {
     }
 
     public static String availableCommands() {
-        return	"`!help` - Shows this help message" +
+        return "`!help` - Shows this help message" +
                 "\n**Game Controls**" +
                 "\n- `!startSim` - Starts the game" +
                 "\n- `!endSim` - End the current game" +
@@ -102,16 +102,37 @@ public class BotResponses {
         return sb.toString();
     }
 
-    public static String stockSuccessfullyBought(String playerName, String stockName, double quantity) {
-        return String.format("Player %s successfully bought %.2f shares of %s.", playerName, quantity, stockName);
+    public static String stockSuccessfullyBought(
+            String playerName,
+            String stockName,
+            double quantity) {
+        return String.format("Player %s successfully bought %.2f shares of %s.",
+                playerName,
+                quantity,
+                stockName);
     }
 
-    public static String stockSuccessfullySold(String playerName, String stockName, double quantity) {
-        return String.format("Player %s successfully sold %.2f shares of %s.", playerName, quantity, stockName);
+    public static String stockSuccessfullySold(
+            String playerName,
+            String stockName,
+            double quantity) {
+        return String.format("Player %s successfully sold %.2f shares of %s.",
+                playerName,
+                quantity,
+                stockName);
     }
 
-    public static String portfolioOverview(String playerName, String portfolioOverview, double cash, double totalValue) {
-        return String.format("Portfolio Overview for %s:\n%sCash: $%.2f\nTotal Portfolio Value: $%.2f", playerName, portfolioOverview, cash, totalValue);
+    public static String portfolioOverview(
+            String playerName,
+            String portfolioOverview,
+            double cash,
+            double totalValue) {
+        return String.format(
+                "Portfolio Overview for %s:\n%sCash: $%.2f\nTotal Portfolio Value: $%.2f",
+                playerName,
+                portfolioOverview,
+                cash,
+                totalValue);
     }
 
     public static String marketOverview(String marketOverview) {
