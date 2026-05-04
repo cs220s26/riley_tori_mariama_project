@@ -168,6 +168,8 @@ uses: actions/setup-java@v4
 with:
   java-version: '21
 
+```  
+
 # CI Execution
 
 * The CI workflow runs automatically every time code is pushed to the GitHub repository:
