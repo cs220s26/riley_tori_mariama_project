@@ -1,5 +1,0 @@
-maven-amazon-corretto21
-git
-redis6
-
-
