@@ -3,23 +3,23 @@ This bot simulates a stock market. Players can buy and sell stocks, track their 
 
 Project designed for CSCI220 DevOps.
 
-# Contributers
+# Contributors
 
 - [Riley Trigo](https://github.com/RileyJTrigo) 
 - [Mariama Diallo](https://github.com/diallom-max)
 - [Ahmed Saeed](https://github.com/AhmedSaeed-CS)
 - [Tori Champagne](https://github.com/champagnet04)
 
-# Set Up
-To set up this this project:
+# Setup
+To set up this project:
 
-* First we need to install homebrew:
+* First, we need to install homebrew:
 
 ``` 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-* to verify installation of homebrew type brew -h. Output should be:
+* To verify installation of homebrew type ``` brew -h ```. Output should be:
 
 ```
 Example usage:
@@ -47,25 +47,25 @@ Further help:
   https://docs.brew.sh
 ```
 
-* then install git:
+* Then install git:
 
 ```
 brew install git
 ```
 
-* then install java:
+* Then install java:
 
 ``` 
 brew install openjdk
 ```
 
-* then install maven:
+* Then install maven:
 
 ```
 brew install maven
 ```
 
-* then install redis:
+* Then install redis:
 
 ```
 brew install redis
@@ -78,26 +78,74 @@ git clone https://github.com/cs220s26/riley_tori_mariama_ahmed.git
 cd riley_tori_mariama_ahmed
 ```
 
-# Local Deploy
+# Local Deployment
 After cloning the repo, complete the following steps:
 
-* Compile, Test, Package:
+* Compile, Test, and package:
 
 ```
 mvn package
 ```
 
-* Bot token 
-(we need to do that)
+* To retrieve your bot token, you will need to create an AWS secret manager. Go through these steps:
+
+1. Set up your credentials. Log in to AWS learner lab (https://awsacademy.instructure.com/login/canvas), after logging in start the lab, then click on AWS Details on the top right and next to AWS CLI click Show. Copy the credintials and store them in this file ~/.aws/credentials . Note: You will need to store new credentials every time you start the lab.
+
+2. After storing your credentials, from the AWS console go to Secrets Manager. click Store a new secret. Choose secret type "Other type of secret". In "Key" put DISCORD_TOKEN. In Value, Store your own Discord Token. Click next. Name the secret "220_Discord_Token" note the capitalization. For the next steps, the default settings are fine so click next until you can store it. After clicking store, reload the page to see the secret.
 
 
-* in one terminal window run redis:
+* Now, in one terminal window run redis:
 
 ```
 redis-server
 ```
 
 * in a second terminal window run the bot
-java -jar target/....
+
+```
+java -jar target/dbot-1.0.0-jar-with-dependencies.jar
+```
+
+# EC2 Deployment
+
+* 1. Launch the instance with Permissions to access Secrets Manager:
+While launching the instance, go to Advanced details and choose LabInstanceProfile for IAM instance profile. 
+
+* 2. In the EC2 instance, Do the following:
+Install Java and Maven:
+
+```
+sudo yum install -y maven-amazon-corretto21
+```
+
+Install Git and Clone the Repo:
+
+```
+sudo yum install -y git
+git clone https://github.com/cs220s26/riley_tori_mariama_ahmed.git
+```
+
+Install and launch Redis:
+
+```
+sudo yum install -y redis6
+sudo systemctl start redis6
+```
+To verify Redis is running with ping (if Redis is running it will respond with PONG)
+
+```
+redis6-cli ping
+```
+
+* 3. Build and Run the bot:
+
+```
+mvn package
+java -jar target/dbot-1.0.0-jar-with-dependencies.jar
+```
+
+
+
+
 
 
