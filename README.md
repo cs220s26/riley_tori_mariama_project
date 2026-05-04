@@ -167,7 +167,9 @@ uses: actions/checkout@v4
 uses: actions/setup-java@v4
 with:
   java-version: '21
+
 # CI Execution
+
 * The CI workflow runs automatically every time code is pushed to the GitHub repository:
 ```
 on: [push]
@@ -184,7 +186,9 @@ mvn test
 * The `mvn test` command runs checkstyle and unit tests for the project.
 * If the tests and checkstyle pass, the CI workflow finishes successfully.
 * If the tests fail, checkstyle fails, or the project does not build correctly, the CI workflow fails. The error can be viewed in the GitHub repository under the Actions tab.
+
 # CD Setup
+
 * This project uses GitHub Actions for Continuous Deployment to redeploy the bot on AWS EC2. The CD workflow file is located in:
 ```
 .github/workflows/redeploy.yml
@@ -229,7 +233,9 @@ cd /riley_tori_mariama_ahmed
 sudo bash ./redeploy.sh
 ```
 * This means the deployment setup depends on the EC2 instance already having the project folder and the `redeploy.sh` script ready to run.
+
 # CD Execution
+
 * The CD workflow does not run automatically when code is pushed. It is triggered manually from the GitHub Actions tab:
 ```
 on:
