@@ -42,7 +42,7 @@ public class BotResponses {
     }
 
     public static String availableCommands() {
-        return "`!help` - Shows this help message" +
+        return "`<This message has been changed!>!help` - Shows this help message" +
                 "\n**Game Controls**" +
                 "\n- `!startSim` - Starts the game" +
                 "\n- `!endSim` - End the current game" +
