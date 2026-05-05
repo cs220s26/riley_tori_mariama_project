@@ -3,6 +3,9 @@ This bot simulates a stock market. Players can buy and sell stocks, track their 
 
 Project designed for CSCI220 DevOps.
 
+# UML Diagram
+<img width="1398" height="1262" alt="DiscordBotUML" src="https://github.com/user-attachments/assets/3a74a943-b1bc-4a2c-8022-4452dc81f22f" />
+
 # Contributors
 
 - [Riley Trigo](https://github.com/RileyJTrigo) 
