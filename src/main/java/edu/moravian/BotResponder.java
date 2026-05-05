@@ -32,7 +32,7 @@ public class BotResponder {
 
     public String respond(String message, String playerName) {
         try {
-            if ("<This has been changed!> !help".equals(message)) {
+            if ("!help".equals(message)) {
                 return handleHelp();
             } else if ("!status".equals(message)) {
                 return handleStatus();
