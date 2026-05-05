@@ -1,5 +1,5 @@
 # Stock Market Simulation Bot
-This bot simulates a stock market. Players can buy and sell stocks, track their portfolio, and compete with others to see who can make the most profit. The game is designed into rounds where each round randomly progresses the stock prices. The project is separated into three main components: A delivery mechanism (a Discord bot), a data storage mechanism (Redis/Memory), and the core game logic.
+This bot simulates a stock market. Players can buy and sell stocks, track their portfolio, and compete with others to see who can make the most profit. The game is designed into rounds where each round randomly progresses the stock prices. This project enhances the bot using DevOps principles to pipeline the development and deployment.
 
 Project designed for CSCI220 DevOps.
 
@@ -110,12 +110,21 @@ After cloning the repo, complete the following steps:
 mvn package
 ```
 
-* To retrieve your bot token, you will need to create an AWS secret manager. Go through these steps:
+* To retrieve your bot token and DNS credentials, you will need to create AWS Secrets Manager secrets. Go through these steps:
 
 1. Set up your credentials. Log in to AWS learner lab (https://awsacademy.instructure.com/login/canvas), after logging in start the lab, then click on AWS Details on the top right and next to AWS CLI click Show. Copy the credintials and store them in this file ~/.aws/credentials . Note: You will need to store new credentials every time you start the lab.
 
-2. After storing your credentials, from the AWS console go to Secrets Manager. click Store a new secret. Choose secret type "Other type of secret". In "Key" put DISCORD_TOKEN. In Value, Store your own Discord Token. Click next. Name the secret "220_Discord_Token" note the capitalization. For the next steps, the default settings are fine so click next until you can store it. After clicking store, reload the page to see the secret.
+2. After storing your credentials, from the AWS console go to Secrets Manager. Click Store a new secret. Choose secret type "Other type of secret". In "Key" put DISCORD_TOKEN. In Value, store your Discord Token. Click next. Name the secret "220_Discord_Token" (note the capitalization). For the next steps, use the default settings and store it.
 
+3. Create another secret for DNS. Click Store a new secret. Choose secret type "Other type of secret". Switch to plaintext and paste:
+
+{
+"USERNAME": "your_username",
+"LABEL": "web",
+"TOKEN": "your_generated_token"
+}
+
+Name the secret "220_DNS_Token" and enter your DNS credentials in USERNAME and TOKEN as specified above
 
 * Now, in one terminal window run redis:
 
@@ -132,10 +141,10 @@ java -jar target/dbot-1.0.0-jar-with-dependencies.jar
 # EC2 Deployment
 
 * 1. Launch the instance with Permissions to access Secrets Manager:
-While launching the instance, go to Advanced details and choose LabInstanceProfile for IAM instance profile. 
+While launching the instance, go to Advanced details and choose LabInstanceProfile for IAM instance profile.  
 
 * 2. In the EC2 instance, Do the following:
-Install Java and Maven:
+Install Maven:
 
 ```
 sudo yum install -y maven-amazon-corretto21
@@ -322,7 +331,7 @@ sudo bash ./redeploy.sh
 * AWS EC2 - Used to deploy and run the bot on a cloud server.
   * https://aws.amazon.com/ec2/
 
-* AWS Secrets Manager - Used to store the Discord bot token securely.
+* AWS Secrets Manager - Used to securely store the Discord bot token and DNS update credentials.
   * https://aws.amazon.com/secrets-manager/
 
 * Homebrew - Used to install tools such as Git, Java, Maven, and Redis locally.
@@ -357,8 +366,3 @@ sudo bash ./redeploy.sh
 
 * We used the GitHub Actions documentation to create the CI and CD workflow files.
   * https://docs.github.com/actions
-
-
-
-
-
